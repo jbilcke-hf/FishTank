@@ -11,7 +11,7 @@ const actions = [
   "making bubbles",
   "making circles",
   "opening and closing its mouth",
-  "escaping an octopus",
+  // "with an octopus",
   "playing with another fish",
   "eating fishfood",
   "eating a crab",
