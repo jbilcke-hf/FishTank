@@ -1,5 +1,5 @@
 import { pick } from "./pick"
-import { Agent } from "./types"
+import { Agent, Scene } from "./types"
 
 const actions = [
   "working on lavae",

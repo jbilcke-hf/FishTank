@@ -8,4 +8,4 @@ pinned: false
 app_port: 3000
 ---
 
-LifeSim uses a text-to-video model to render artificially simulated scenes.
+LifeSim uses a text-to-video model to render artificially simulated agents.
