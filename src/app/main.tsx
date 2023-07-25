@@ -5,19 +5,24 @@ import { useEffect, useState, useTransition } from "react"
 import { VideoPlayer } from "@/components/business/video-player"
 import { renderScene } from "./renderScene"
 
-const initialScene = `medium shot of a single clownfish idling near a yellow coral, underwater footage, the clownfish is in the middle of the screen`
 
 const actions = [
   "idling",
-  "fighting another fish",
+  "making bubbles",
+  "making circles",
+  "opening and closing its mouth",
   "escaping an octopus",
-  "eating some coral",
-  "eating another fish"
+  "playing with another fish",
+  "eating fishfood",
+  "eating a crab",
+  "attacked by a jellyfish"
 ]
 
 const positions = [
+  "at the top of the coral",
+  "at the bottom of the coral",
   "centered in the middle",
-  "hiding in the sand",
+  "burrowing in the sand",
   "hiding in the coral"
 ]
 
@@ -28,9 +33,11 @@ const getScene = () => {
   const position = pick(positions)
 
   const prompt = [
-    `medium shot of a single clownfish ${action}, ${position}",
-    "in front of yellow coral`,
-    `underwater footage`,
+    `medium shot of a clownfish`,
+    action,
+    position,
+    `in front of yellow coral`,
+    `high res underwater footage`,
   ].join(", ")
 
   return {
