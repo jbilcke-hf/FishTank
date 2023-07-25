@@ -12,33 +12,16 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-import { renderScene } from "./renderScene"
-import { Scene } from "./scenes/types"
-
-import { getScene as getSceneAnts } from "./scenes/ants"
-import { getScene as getSceneFishes } from "./scenes/fishTank"
-
-type SceneType = 'ant' | 'fish'
-
-const types: {
-  label: string
-  value: SceneType
-}[] = [
-  {
-    label: "Ant",
-    value: "ant"
-  },
-  {
-    label: "Fish",
-    value: "fish"
-  }
-]
+import { render } from "./render"
+import { Agent, AgentType, Scene } from "./agents/types"
+import { agents, defaultAgent, getAgent } from "./agents"
 
 export default function Main() {
   const [url, setUrl] = useState<string>()
   const [isPending, startTransition] = useTransition()
+  const [agent, setAgent] = useState<Agent>()
   const [scene, setScene] = useState<Scene>()
-  const ref = useRef<SceneType>()
+  const ref = useRef<AgentType>(defaultAgent)
    
   useEffect(() => {
     
@@ -47,21 +30,26 @@ export default function Main() {
 
       startTransition(async () => {
 
-        console.log(`generating new scene..`)
+        // console.log(`getting agent..`)
         const type = ref?.current
-        const newScene = type === 'ant' ? getSceneAnts() : getSceneFishes()
+        const agent = getAgent(type)
 
-        const newUrl = await renderScene(newScene.prompt)
+        // console.log(`asking agent to determine things..`)
+        const scene = agent.simulate()
+
+        // console.log(`rendering scene..`)
+        const newUrl = await render(scene.prompt)
 
         if (type !== ref?.current) {
-          console.log("scene type changed while we were rendering")
+          console.log("agent type changed while we were rendering")
           setTimeout(() => { updateView() }, 0)
           return
         } 
 
         // console.log(`newUrl: ${newUrl}`)
         setUrl(newUrl)
-        setScene(newScene)
+        setAgent(agent)
+        setScene(scene)
         setTimeout(() => { updateView()}, 2000)
       })
     }
@@ -76,24 +64,24 @@ export default function Main() {
         <div className="flex flex-row items-center space-x-3">
           <label className="flex">Agent model:</label>
           <Select
-            defaultValue={"fish" as SceneType}
+            defaultValue={defaultAgent}
             onValueChange={(value) => {
-              ref.current = value as SceneType
+              ref.current = value as AgentType
               setUrl("")
             }}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Type" />
             </SelectTrigger>
             <SelectContent>
-              {types.map(({ label, value }) =>
-              <SelectItem key={value} value={value}>{label}</SelectItem>
+              {Object.entries(agents).map(([key, agent]) =>
+              <SelectItem key={key} value={key}>{agent.title}</SelectItem>
               )}
             </SelectContent>
           </Select>
         </div>
-        {url ? <div>
-          <p>Action: {scene?.action}</p>
-          <p>Position: {scene?.position}</p>
+        {(url && scene) ? <div>
+          <p>Action: {scene.action}</p>
+          <p>Position: {scene.position}</p>
         </div> : null}
       </div>
       <VideoPlayer url={url} />

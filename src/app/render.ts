@@ -4,7 +4,7 @@
 // so we have to add it ourselves if needed
 const apiUrl = process.env.RENDERING_ENGINE_API
 
-export async function renderScene(prompt: string) {
+export async function render(prompt: string) {
   try {
     console.log(`calling ${apiUrl}/render with prompt: ${prompt}`)
     const res = await fetch(`${apiUrl}/render`, {
