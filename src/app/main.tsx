@@ -9,14 +9,16 @@ const initialScene = `medium shot of a single clownfish idling near a yellow cor
 
 const actions = [
   "idling",
-  "eating",
-  "looking at camera"
+  "fighting another fish",
+  "escaping an octopus",
+  "eating some coral",
+  "eating another fish"
 ]
 
 const positions = [
-  "swimming in the middle",
-  "swimming from left to right",
-  "swimming from right to left"
+  "centered in the middle",
+  "hiding in the sand",
+  "hiding in the coral"
 ]
 
 const pick = (items: string[]) => items[Math.floor(Math.random()*items.length)]
