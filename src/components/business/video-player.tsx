@@ -4,7 +4,7 @@ export const VideoPlayer = ({ url }: { url?: string }) => {
 
   if (!url) {
     return <div className="flex w-full h-screen items-center justify-center text-center">
-      <div>Connecting to FishTank live stream..</div>
+      <div>Generating first frames.. (might take around 30s)</div>
     </div>
   }
 

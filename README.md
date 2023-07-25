@@ -1,5 +1,5 @@
 ---
-title: FishTank
+title: LifeSim
 emoji: 🐠🪸
 colorFrom: blue
 colorTo: yellow
@@ -8,4 +8,4 @@ pinned: false
 app_port: 3000
 ---
 
-An artificial fish tank
+LifeSim uses a text-to-video model to render artificially simulated scenes.
