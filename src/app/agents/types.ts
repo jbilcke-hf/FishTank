@@ -1,8 +1,9 @@
-export type AgentType = 'ant' | 'fish' | 'fox' | 'smith'
+export type AgentType = 'ant' | 'fish' | 'fox' | 'smith' | 'city' | 'dungeon'
 
 export interface Scene {
   action: string
   position: string
+  time: string
   prompt: string
 }
 

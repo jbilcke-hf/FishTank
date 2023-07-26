@@ -18,6 +18,9 @@ const positions = [
   "in front of a bush"
 ]
 
+const times = [
+  "during the day",
+]
 
 export const agent: Agent = {
   title: "Fox",
@@ -25,11 +28,13 @@ export const agent: Agent = {
   simulate: (): Scene => {
     const action = pick(actions)
     const position = pick(positions)
+    const time = pick(times)
 
     const prompt = [
       `medium shot of a fox`,
       action,
       position,
+      time,
       `high res`,
       `documentary`,
     ].join(", ")
@@ -37,6 +42,7 @@ export const agent: Agent = {
     return {
       action,
       position,
+      time,
       prompt
     }
   }
