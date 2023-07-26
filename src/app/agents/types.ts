@@ -1,4 +1,4 @@
-export type AgentType = 'ant' | 'fish' | 'fox'
+export type AgentType = 'ant' | 'fish' | 'fox' | 'smith'
 
 export interface Scene {
   action: string

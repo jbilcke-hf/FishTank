@@ -19,16 +19,15 @@ import { agents, defaultAgent, getAgent } from "./agents"
 export default function Main() {
   const [url, setUrl] = useState<string>()
   const [isPending, startTransition] = useTransition()
-  const [agent, setAgent] = useState<Agent>()
   const [scene, setScene] = useState<Scene>()
   const ref = useRef<AgentType>(defaultAgent)
    
   useEffect(() => {
     
     const updateView = async () => {
-      console.log(`update view..`)
+      // console.log(`update view..`)
 
-      startTransition(async () => {
+      await startTransition(async () => {
 
         // console.log(`getting agent..`)
         const type = ref?.current
@@ -41,18 +40,20 @@ export default function Main() {
         const newUrl = await render(scene.prompt)
 
         if (type !== ref?.current) {
-          console.log("agent type changed while we were rendering")
+          console.log("agent type changed! reloading scene")
           setTimeout(() => { updateView() }, 0)
           return
         } 
 
-        console.log(`newUrl: ${newUrl}`)
-        if (!newUrl) {
+        if (newUrl) {
+          // console.log(`got a new url: ${newUrl}`)
           setUrl(newUrl)
+          setScene(scene)
+          setTimeout(() => { updateView()}, 1000)
+        } else {
+          // console.log(`going to wait a bit more: ${newUrl}`)
+          setTimeout(() => { updateView()}, 3000)
         }
-        setAgent(agent)
-        setScene(scene)
-        setTimeout(() => { updateView()}, 2000)
       })
     }
 
