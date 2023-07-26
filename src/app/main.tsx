@@ -39,7 +39,13 @@ export default function Main() {
         const scene = agent.simulate()
 
         // console.log(`rendering scene..`)
-        const rendered = await render(scene.prompt, scene.actionnables)
+        const rendered = await render(
+          scene.prompt,
+
+          []
+          // note: using actionnables will add +30sec to the query
+          // scene.actionnables
+        )
 
         if (type !== ref?.current) {
           console.log("agent type changed! reloading scene")
