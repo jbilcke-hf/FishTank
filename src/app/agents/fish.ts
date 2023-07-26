@@ -21,8 +21,14 @@ const positions = [
   "hiding in the coral"
 ]
 
-const times = [
+const lights = [
   "during the day",
+]
+
+const actionnables = [
+  "fish",
+  "coral",
+  "sand"
 ]
 
 export const agent: Agent = {
@@ -31,13 +37,13 @@ export const agent: Agent = {
   simulate: (): Scene => {
     const action = pick(actions)
     const position = pick(positions)
-    const time = pick(times)
+    const light = pick(lights)
 
     const prompt = [
       `medium shot of a clownfish`,
       action,
       position,
-      time,
+      light,
       `in front of yellow coral`,
       `high res`,
       `underwater footage`,
@@ -46,7 +52,8 @@ export const agent: Agent = {
     return {
       action,
       position,
-      time,
+      light,
+      actionnables,
       prompt
     }
   }

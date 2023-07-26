@@ -20,9 +20,19 @@ const positions = [
   "theme park with one big rollercoaster"
 ]
 
-const times = [
+const lights = [
   "during the day",
   // "during the night",
+]
+
+const actionnables = [
+  "building",
+  "road",
+  "car",
+  "tower",
+  "tree",
+  "river",
+  "sea"
 ]
 
 export const agent: Agent = {
@@ -31,13 +41,13 @@ export const agent: Agent = {
   simulate: (): Scene => {
     const action = pick(actions)
     const position = pick(positions)
-    const time = pick(times)
+    const light = pick(lights)
 
     const prompt = [
       `static isometrical view of 3D rendered city`,
       action,
       position,
-      time,
+      light,
       `isometric`,
       `game`,
       `high res`,
@@ -46,7 +56,8 @@ export const agent: Agent = {
     return {
       action,
       position,
-      time,
+      light,
+      actionnables,
       prompt
     }
   }

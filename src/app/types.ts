@@ -31,6 +31,17 @@ export interface ImageSegment {
   score: number 
 }
 
-export interface RenderResponse {
-  
+
+export interface ImageSegment {
+  id: number
+  box: number[]
+  label: string
+  score: number 
+}
+
+export interface RenderAPIResponse {
+  videoUrl: string 
+  error: string
+  maskBase64: string
+  segments: ImageSegment[]
 }

@@ -18,8 +18,17 @@ const positions = [
   "in front of a bush"
 ]
 
-const times = [
+const lights = [
   "during the day",
+]
+
+const actionnables = [
+  "fox",
+  "ground",
+  "grass",
+  "water",
+  "tree",
+  "sky",
 ]
 
 export const agent: Agent = {
@@ -28,13 +37,13 @@ export const agent: Agent = {
   simulate: (): Scene => {
     const action = pick(actions)
     const position = pick(positions)
-    const time = pick(times)
+    const light = pick(lights)
 
     const prompt = [
       `medium shot of a fox`,
       action,
       position,
-      time,
+      light,
       `high res`,
       `documentary`,
     ].join(", ")
@@ -42,7 +51,8 @@ export const agent: Agent = {
     return {
       action,
       position,
-      time,
+      light,
+      actionnables,
       prompt
     }
   }

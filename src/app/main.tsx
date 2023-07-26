@@ -15,11 +15,13 @@ import {
 import { render } from "./render"
 import { Agent, AgentType, Scene } from "./agents/types"
 import { agents, defaultAgent, getAgent } from "./agents"
+import { ImageSegment } from "./types"
 
 export default function Main() {
-  const [url, setUrl] = useState<string>()
+  const [url, setUrl] = useState<string>("")
   const [isPending, startTransition] = useTransition()
   const [scene, setScene] = useState<Scene>()
+  const [segments, setSegments] = useState<ImageSegment[]>([])
   const ref = useRef<AgentType>(defaultAgent)
    
   useEffect(() => {
@@ -37,7 +39,7 @@ export default function Main() {
         const scene = agent.simulate()
 
         // console.log(`rendering scene..`)
-        const newUrl = await render(scene.prompt)
+        const rendered = await render(scene.prompt, scene.actionnables)
 
         if (type !== ref?.current) {
           console.log("agent type changed! reloading scene")
@@ -45,14 +47,16 @@ export default function Main() {
           return
         } 
 
-        if (newUrl) {
+
+        if (rendered.videoUrl) {
           // console.log(`got a new url: ${newUrl}`)
-          setUrl(newUrl)
+          setUrl(rendered.videoUrl)
           setScene(scene)
+          setSegments(rendered.segments)
           setTimeout(() => { updateView()}, 1000)
         } else {
           // console.log(`going to wait a bit more: ${newUrl}`)
-          setTimeout(() => { updateView()}, 3000)
+          setTimeout(() => { updateView()}, rendered.error ? 6000 : 3000)
         }
       })
     }
@@ -70,7 +74,7 @@ export default function Main() {
             defaultValue={defaultAgent}
             onValueChange={(value) => {
               ref.current = value as AgentType
-              // setUrl("")
+              setUrl("")
             }}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Type" />
@@ -82,10 +86,19 @@ export default function Main() {
             </SelectContent>
           </Select>
         </div>
+        <p>Note: changing the model might take up to 1 minute</p>
+          
         {(scene) ? <div>
           <p>Action: {scene.action}</p>
           <p>Position: {scene.position}</p>
+          <p>Light: {scene.light}</p>
         </div> : null}
+        <div className="flex flex-col">
+        {segments.map((segment, i) => 
+          <div key={i}>
+            {segment.label} ({segment.score})
+          </div>)}
+        </div>
       </div>
       <VideoPlayer url={url} />
     </div>

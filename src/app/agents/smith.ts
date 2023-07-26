@@ -17,9 +17,17 @@ const positions = [
   "on the sidewalk of a street"
 ]
 
-const times = [
+const lights = [
   "during the day",
   "during the night",
+]
+
+const actionnables = [
+  "face",
+  "costume",
+  "street",
+  "book",
+  "building",
 ]
 
 export const agent: Agent = {
@@ -28,14 +36,14 @@ export const agent: Agent = {
   simulate: (): Scene => {
     const action = pick(actions)
     const position = pick(positions)
-    const time = pick(times)
+    const light = pick(lights)
 
     const prompt = [
       `static medium shot of Agent Smith from the Matrix`,
       `wearing a black costume with black tie and black sunglasses`,
       action,
       position,
-      time,
+      light,
       `high res`,
       `Matrix movie`,
     ].join(", ")
@@ -43,7 +51,8 @@ export const agent: Agent = {
     return {
       action,
       position,
-      time,
+      light,
+      actionnables,
       prompt
     }
   }

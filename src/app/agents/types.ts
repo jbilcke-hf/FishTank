@@ -3,7 +3,8 @@ export type AgentType = 'ant' | 'fish' | 'fox' | 'smith' | 'city' | 'dungeon'
 export interface Scene {
   action: string
   position: string
-  time: string
+  light: string
+  actionnables: string[]
   prompt: string
 }
 

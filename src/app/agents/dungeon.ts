@@ -22,10 +22,20 @@ const positions = [
   "a damp medieval jail cell with stone walls and wooden floor"
 ]
 
-const times = [
+const lights = [
   "lit through windows",
   "lit through wall-mounted torchs"
   // "poorly lit"
+]
+
+const actionnables = [
+  "floor",
+  "fireplace",
+  "door",
+  "window",
+  "chair",
+  "table",
+  "torch"
 ]
 
 export const agent: Agent = {
@@ -34,13 +44,13 @@ export const agent: Agent = {
   simulate: (): Scene => {
     const action = pick(actions)
     const position = pick(positions)
-    const time = pick(times)
+    const light = pick(lights)
 
     const prompt = [
       `first-person footage`,
       action,
       position,
-      time,
+      light,
       `medieval`,
       `photography`,
       `documentary`,
@@ -50,7 +60,8 @@ export const agent: Agent = {
     return {
       action,
       position,
-      time,
+      light,
+      actionnables,
       prompt
     }
   }
