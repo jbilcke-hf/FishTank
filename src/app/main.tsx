@@ -46,8 +46,10 @@ export default function Main() {
           return
         } 
 
-        // console.log(`newUrl: ${newUrl}`)
-        setUrl(newUrl)
+        console.log(`newUrl: ${newUrl}`)
+        if (!newUrl) {
+          setUrl(newUrl)
+        }
         setAgent(agent)
         setScene(scene)
         setTimeout(() => { updateView()}, 2000)
@@ -67,7 +69,7 @@ export default function Main() {
             defaultValue={defaultAgent}
             onValueChange={(value) => {
               ref.current = value as AgentType
-              setUrl("")
+              // setUrl("")
             }}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Type" />
@@ -79,7 +81,7 @@ export default function Main() {
             </SelectContent>
           </Select>
         </div>
-        {(url && scene) ? <div>
+        {(scene) ? <div>
           <p>Action: {scene.action}</p>
           <p>Position: {scene.position}</p>
         </div> : null}
