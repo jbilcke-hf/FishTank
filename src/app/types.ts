@@ -27,20 +27,13 @@ export interface RenderRequest {
 export interface ImageSegment {
   id: number
   box: number[]
+  color: number[]
   label: string
   score: number 
 }
 
-
-export interface ImageSegment {
-  id: number
-  box: number[]
-  label: string
-  score: number 
-}
-
-export interface RenderAPIResponse {
-  videoUrl: string 
+export interface RenderedScene {
+  assetUrl: string 
   error: string
   maskBase64: string
   segments: ImageSegment[]

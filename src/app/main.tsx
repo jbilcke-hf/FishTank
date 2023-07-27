@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useTransition } from "react"
 
-import { VideoPlayer } from "@/components/business/video-player"
+import { VideoRenderer } from "@/components/business/video-renderer"
 
 import {
   Select,
@@ -44,7 +44,7 @@ export default function Main() {
 
           []
           // note: using actionnables will add +30sec to the query
-          // scene.actionnables
+          // scene.actionnables.slice(0, 5) // too many can slow us down it seems
         )
 
         if (type !== ref?.current) {
@@ -54,9 +54,9 @@ export default function Main() {
         } 
 
 
-        if (rendered.videoUrl) {
+        if (rendered.assetUrl) {
           // console.log(`got a new url: ${newUrl}`)
-          setUrl(rendered.videoUrl)
+          setUrl(rendered.assetUrl)
           setScene(scene)
           setSegments(rendered.segments)
           setTimeout(() => { updateView()}, 1000)
@@ -106,7 +106,7 @@ export default function Main() {
           </div>)}
         </div>
       </div>
-      <VideoPlayer url={url} />
+      <VideoRenderer url={url} />
     </div>
   )
 }
